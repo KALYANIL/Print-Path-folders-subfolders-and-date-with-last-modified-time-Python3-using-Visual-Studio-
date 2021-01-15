@@ -1,0 +1,23 @@
+import os
+import csv
+import time
+from os.path import join,splitext
+
+path = r"copy the path of your file"
+fileinfo=[]
+for path,dirs,files in os.walk(path):
+    for file in files:
+        datetime = os.path.getmtime(path)
+        mod_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(datetime))
+        size = os.stat(path).st_size
+        extension = os.path.splitext(file)[-1]
+        newrow = [path, file, mod_time, size]
+        fileinfo.append(newrow)
+
+  
+def task_csv(filelist=[]):
+    csv_writer = csv.writer(open('14012021_csv' , 'w', newline=''), delimiter =',')
+    csv_writer.writerow(['file name:','folderpath:','extensions:','dateandtime'])
+    for row in filelist:
+        csv_writer.writerow(row)
+task_csv(fileinfo)
